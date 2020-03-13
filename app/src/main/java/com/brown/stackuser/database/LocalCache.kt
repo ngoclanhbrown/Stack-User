@@ -13,15 +13,20 @@ class LocalCache(
 ) {
 
     /**
-     * Insert list of users to the database, on a background thread
+     * Insert list of users to the database, if a user is existed, update the user instead.
+     * The favorite field is exclusive while update
+     * Work on a background thread
      */
-    fun upsert(users: List<User>, insertFinished: () -> Unit) {
+    fun upsertUsers(users: List<User>, insertFinished: () -> Unit) {
         ioExecutor.execute {
             userDao.upsert(users)
             insertFinished()
         }
     }
 
+    /**
+     * Update favorite status of a user to the database, on a background thread
+     */
     fun updateFavoriteUser(userId: Long, favorite: Boolean) {
         ioExecutor.execute {
             userDao.updateFavoriteUser(userId, favorite)
