@@ -33,6 +33,8 @@ class UserListFragment : Fragment() {
         ).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
 
+        setUpEventObserver()
+
         setUpRecyclerView()
 
         setHasOptionsMenu(true)
@@ -44,9 +46,7 @@ class UserListFragment : Fragment() {
     private fun setUpRecyclerView() {
         val adapter = UserAdapter(
             UserViewHolder.OnClickListener { user ->
-                val action =
-                    UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(user)
-                findNavController().navigate(action)
+                viewModel.navigationToDetail(user)
             },
             UserViewHolder.CheckBoxListener { user ->
                 viewModel.updateFavoriteUser(user)
@@ -58,6 +58,18 @@ class UserListFragment : Fragment() {
         })
 
         binding.userList.adapter = adapter
+    }
+
+
+    private fun setUpEventObserver() {
+        viewModel.navigationToDetailEvent.observe(viewLifecycleOwner, Observer { user ->
+            user?.let {
+                val action =
+                    UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(it)
+                findNavController().navigate(action)
+                viewModel.navigationToDetailDone()
+            }
+        })
     }
 
 
