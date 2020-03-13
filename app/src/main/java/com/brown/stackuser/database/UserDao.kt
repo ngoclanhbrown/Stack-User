@@ -59,7 +59,7 @@ abstract class UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertUserReputation(reputationList: List<Reputation>)
 
-    @Query("SELECT * FROM UserReputation WHERE userId = :id")
+    @Query("SELECT * FROM UserReputation WHERE userId = :id ORDER BY creationDate DESC")
     abstract fun getUserReputation(id: Long): DataSource.Factory<Int, Reputation>
 
 }
