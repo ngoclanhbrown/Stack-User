@@ -8,14 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.brown.stackuser.Injection
 import com.brown.stackuser.adapter.UserAdapter
 import com.brown.stackuser.adapter.UserViewHolder
-import com.brown.stackuser.api.StackOverflowService
-import com.brown.stackuser.database.LocalCache
-import com.brown.stackuser.database.UserDatabase
 import com.brown.stackuser.databinding.UserListFragmentBinding
-import com.brown.stackuser.repository.UserRepository
-import java.util.concurrent.Executors
 
 class UserListFragment : Fragment() {
 
@@ -30,15 +26,11 @@ class UserListFragment : Fragment() {
         binding = UserListFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
-        val userDao = UserDatabase.getInstance(context!!).userDao
-        val repository = UserRepository(
-            StackOverflowService.create(),
-            LocalCache(userDao, Executors.newSingleThreadExecutor()),
-            Executors.newSingleThreadExecutor()
-        )
-        val factory = UserListViewModel.Factory(repository)
+        val application = requireNotNull(activity).application
 
-        viewModel = ViewModelProvider(this, factory).get(UserListViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this, Injection.provideUserListViewModelFactory(application)
+        ).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
 
         setUpRecyclerView()
