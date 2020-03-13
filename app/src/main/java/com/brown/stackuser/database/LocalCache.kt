@@ -1,5 +1,6 @@
 package com.brown.stackuser.database
 
+import com.brown.stackuser.model.Reputation
 import com.brown.stackuser.model.User
 import java.util.concurrent.Executor
 
@@ -36,5 +37,17 @@ class LocalCache(
     fun getUsers() = userDao.getUsers()
 
     fun getFavoriteUsers() = userDao.getFavoriteUsers()
+
+    /**
+     * Insert list of user reputation to the database, on a background thread
+     */
+    fun insertUserReputation(reputationList: List<Reputation>, insertFinished: () -> Unit) {
+        ioExecutor.execute {
+            userDao.insertUserReputation(reputationList)
+            insertFinished()
+        }
+    }
+
+    fun getUserReputation(userId: Long) = userDao.getUserReputation(userId)
 
 }
