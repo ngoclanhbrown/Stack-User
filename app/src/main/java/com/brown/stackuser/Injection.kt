@@ -26,7 +26,7 @@ object Injection {
      * Creates an instance of [UserRepository] based on the [StackOverflowError] and a
      * [LocalCache]
      */
-    private fun provideUserRepository(context: Context): UserRepository {
+    fun provideUserRepository(context: Context): UserRepository {
         return UserRepository(
             StackOverflowService.create(),
             provideCache(context),
