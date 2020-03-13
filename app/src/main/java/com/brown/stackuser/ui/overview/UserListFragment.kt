@@ -10,8 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.brown.stackuser.adapter.UserAdapter
 import com.brown.stackuser.adapter.UserViewHolder
+import com.brown.stackuser.api.StackOverflowService
+import com.brown.stackuser.database.LocalCache
 import com.brown.stackuser.database.UserDatabase
 import com.brown.stackuser.databinding.UserListFragmentBinding
+import com.brown.stackuser.repository.UserRepository
+import java.util.concurrent.Executors
 
 class UserListFragment : Fragment() {
 
@@ -27,7 +31,12 @@ class UserListFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val userDao = UserDatabase.getInstance(context!!).userDao
-        val factory = UserListViewModel.Factory(userDao)
+        val repository = UserRepository(
+            StackOverflowService.create(),
+            LocalCache(userDao, Executors.newSingleThreadExecutor()),
+            Executors.newSingleThreadExecutor()
+        )
+        val factory = UserListViewModel.Factory(repository)
 
         viewModel = ViewModelProvider(this, factory).get(UserListViewModel::class.java)
         binding.viewModel = viewModel
@@ -45,7 +54,7 @@ class UserListFragment : Fragment() {
                 Toast.makeText(context, "You clicked user ${user.id}", Toast.LENGTH_SHORT).show()
             },
             UserViewHolder.CheckBoxListener { user ->
-                viewModel.updateFavorite(user)
+                //  TODO: Handle favorite event
             }
         )
 
