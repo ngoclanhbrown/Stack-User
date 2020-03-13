@@ -18,10 +18,13 @@ class UserDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val args = UserDetailFragmentArgs.fromBundle(arguments!!)
+
         binding = UserDetailFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
-        viewModel = ViewModelProvider(this).get(UserDetailViewModel::class.java)
+        val factory = UserDetailViewModel.Factory(args.user)
+        viewModel = ViewModelProvider(this, factory).get(UserDetailViewModel::class.java)
         binding.viewModel = viewModel
 
         return binding.root
