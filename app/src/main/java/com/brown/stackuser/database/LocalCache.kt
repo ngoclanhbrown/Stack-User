@@ -1,5 +1,6 @@
 package com.brown.stackuser.database
 
+import com.brown.stackuser.model.Reputation
 import com.brown.stackuser.model.User
 import java.util.concurrent.Executor
 
@@ -13,15 +14,20 @@ class LocalCache(
 ) {
 
     /**
-     * Insert list of users to the database, on a background thread
+     * Insert list of users to the database, if a user is existed, update the user instead.
+     * The favorite field is exclusive while update
+     * Work on a background thread
      */
-    fun upsert(users: List<User>, insertFinished: () -> Unit) {
+    fun upsertUsers(users: List<User>, insertFinished: () -> Unit) {
         ioExecutor.execute {
             userDao.upsert(users)
             insertFinished()
         }
     }
 
+    /**
+     * Update favorite status of a user to the database, on a background thread
+     */
     fun updateFavoriteUser(userId: Long, favorite: Boolean) {
         ioExecutor.execute {
             userDao.updateFavoriteUser(userId, favorite)
@@ -31,5 +37,17 @@ class LocalCache(
     fun getUsers() = userDao.getUsers()
 
     fun getFavoriteUsers() = userDao.getFavoriteUsers()
+
+    /**
+     * Insert list of user reputation to the database, on a background thread
+     */
+    fun insertUserReputation(reputationList: List<Reputation>, insertFinished: () -> Unit) {
+        ioExecutor.execute {
+            userDao.insertUserReputation(reputationList)
+            insertFinished()
+        }
+    }
+
+    fun getUserReputation(userId: Long) = userDao.getUserReputation(userId)
 
 }

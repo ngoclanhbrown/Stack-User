@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.brown.stackuser.model.Reputation
 import com.brown.stackuser.model.User
 
 /**
  * Database schema that holds the list of users.
  */
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Reputation::class], version = 1, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
 
     abstract val userDao: UserDao

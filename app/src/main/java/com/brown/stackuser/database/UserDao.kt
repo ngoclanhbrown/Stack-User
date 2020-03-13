@@ -2,6 +2,7 @@ package com.brown.stackuser.database
 
 import androidx.paging.DataSource
 import androidx.room.*
+import com.brown.stackuser.model.Reputation
 import com.brown.stackuser.model.User
 import timber.log.Timber
 
@@ -53,5 +54,12 @@ abstract class UserDao {
         Timber.i("Inserted ${users.size - updateList.size} records,")
         Timber.i("Updated ${updateList.size} records")
     }
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertUserReputation(reputationList: List<Reputation>)
+
+    @Query("SELECT * FROM UserReputation WHERE userId = :id")
+    abstract fun getUserReputation(id: Long): DataSource.Factory<Int, Reputation>
 
 }

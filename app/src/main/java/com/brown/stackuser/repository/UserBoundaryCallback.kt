@@ -38,7 +38,7 @@ class UserBoundaryCallback(
 
         fetchUsers(service, lastRequestedSize, NETWORK_PAGE_SIZE,
             {
-                cache.upsert(it) {
+                cache.upsertUsers(it) {
                     lastRequestedSize++
                     isRequestInProgress = false
                 }
