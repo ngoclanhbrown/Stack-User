@@ -22,3 +22,9 @@ data class User(
     val lastAccessDate: Long,
     val favorite: Boolean
 ) : Parcelable
+
+
+enum class UserFilter {
+    ALL,
+    FAVORITE
+}

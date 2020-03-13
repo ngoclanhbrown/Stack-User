@@ -15,10 +15,21 @@ class UserRepository(
         const val DATABASE_PAGE_SIZE = 25
     }
 
-    val users = cache.getUsers().toLiveData(
+    val allUsers = cache.getUsers().toLiveData(
         DATABASE_PAGE_SIZE,
         boundaryCallback = UserBoundaryCallback(service, cache),
         fetchExecutor = executor
     )
+
+
+    val favoriteUsers = cache.getFavoriteUsers().toLiveData(
+        DATABASE_PAGE_SIZE,
+        fetchExecutor = executor
+    )
+
+
+    fun updateFavoriteUser(userId: Long, favorite: Boolean) {
+        cache.updateFavoriteUser(userId, favorite)
+    }
 
 }

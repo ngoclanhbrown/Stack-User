@@ -22,7 +22,14 @@ class LocalCache(
         }
     }
 
+    fun updateFavoriteUser(userId: Long, favorite: Boolean) {
+        ioExecutor.execute {
+            userDao.updateFavoriteUser(userId, favorite)
+        }
+    }
 
     fun getUsers() = userDao.getUsers()
+
+    fun getFavoriteUsers() = userDao.getFavoriteUsers()
 
 }

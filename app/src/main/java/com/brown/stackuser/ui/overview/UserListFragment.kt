@@ -1,17 +1,17 @@
 package com.brown.stackuser.ui.overview
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.brown.stackuser.Injection
+import com.brown.stackuser.R
 import com.brown.stackuser.adapter.UserAdapter
 import com.brown.stackuser.adapter.UserViewHolder
 import com.brown.stackuser.databinding.UserListFragmentBinding
+import com.brown.stackuser.model.UserFilter
 
 class UserListFragment : Fragment() {
 
@@ -35,8 +35,9 @@ class UserListFragment : Fragment() {
 
         setUpRecyclerView()
 
-        return binding.root
+        setHasOptionsMenu(true)
 
+        return binding.root
     }
 
 
@@ -46,7 +47,7 @@ class UserListFragment : Fragment() {
                 Toast.makeText(context, "You clicked user ${user.id}", Toast.LENGTH_SHORT).show()
             },
             UserViewHolder.CheckBoxListener { user ->
-                //  TODO: Handle favorite event
+                viewModel.updateFavoriteUser(user)
             }
         )
 
@@ -54,8 +55,28 @@ class UserListFragment : Fragment() {
             adapter.submitList(users)
         })
 
-        binding.userList.itemAnimator = null
         binding.userList.adapter = adapter
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.filter_menu, menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.all_filter -> {
+                viewModel.updateFilter(UserFilter.ALL)
+                true
+            }
+            R.id.favorite_filter -> {
+                viewModel.updateFilter(UserFilter.FAVORITE)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
