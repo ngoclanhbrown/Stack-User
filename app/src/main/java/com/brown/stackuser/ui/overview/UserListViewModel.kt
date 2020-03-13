@@ -1,8 +1,6 @@
 package com.brown.stackuser.ui.overview
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.brown.stackuser.model.User
 import com.brown.stackuser.model.UserFilter
@@ -16,6 +14,10 @@ class UserListViewModel(
     private val favoriteUsers = repository.favoriteUsers
 
     val users = MediatorLiveData<PagedList<User>>()
+
+    //  live data event variable to navigation to DetailFragment
+    private val _navigationToDetailEvent = MutableLiveData<User>()
+    val navigationToDetailEvent: LiveData<User> = _navigationToDetailEvent
 
     private var currentFilter = UserFilter.ALL
 
@@ -35,6 +37,16 @@ class UserListViewModel(
                 }
             }
         }
+    }
+
+
+    fun navigationToDetail(user: User) {
+        _navigationToDetailEvent.value = user
+    }
+
+
+    fun navigationToDetailDone() {
+        _navigationToDetailEvent.value = null
     }
 
 

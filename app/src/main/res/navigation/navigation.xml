@@ -9,6 +9,25 @@
         android:id="@+id/userListFragment"
         android:name="com.brown.stackuser.ui.overview.UserListFragment"
         android:label="UserListFragment"
-        tools:layout="@layout/user_list_fragment" />
+        tools:layout="@layout/user_list_fragment">
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/userListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.brown.stackuser.ui.detail.UserDetailFragment"
+        android:label="UserDetailFragment"
+        tools:layout="@layout/user_detail_fragment">
+        <argument
+            android:name="user"
+            app:argType="com.brown.stackuser.model.User" />
+    </fragment>
+
 
 </navigation>
