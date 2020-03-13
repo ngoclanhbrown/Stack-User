@@ -2,10 +2,10 @@ package com.brown.stackuser.ui.overview
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.brown.stackuser.Injection
 import com.brown.stackuser.R
 import com.brown.stackuser.adapter.UserAdapter
@@ -44,7 +44,9 @@ class UserListFragment : Fragment() {
     private fun setUpRecyclerView() {
         val adapter = UserAdapter(
             UserViewHolder.OnClickListener { user ->
-                Toast.makeText(context, "You clicked user ${user.id}", Toast.LENGTH_SHORT).show()
+                val action =
+                    UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(user)
+                findNavController().navigate(action)
             },
             UserViewHolder.CheckBoxListener { user ->
                 viewModel.updateFavoriteUser(user)
