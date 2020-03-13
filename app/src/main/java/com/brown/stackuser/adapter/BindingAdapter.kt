@@ -2,10 +2,13 @@ package com.brown.stackuser.adapter
 
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.brown.stackuser.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImageUrl(url: String?) {
@@ -18,5 +21,15 @@ fun ImageView.setImageUrl(url: String?) {
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image)
             ).into(this)
+    }
+}
+
+
+@BindingAdapter("date")
+fun TextView.setDate(dateLong: Long?) {
+    dateLong?.let {
+        val date = Date(it)
+        val dateString = SimpleDateFormat.getDateInstance().format(date)
+        text = dateString
     }
 }
