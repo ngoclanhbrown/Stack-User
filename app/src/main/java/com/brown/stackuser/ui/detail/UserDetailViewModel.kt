@@ -1,5 +1,6 @@
 package com.brown.stackuser.ui.detail
 
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.brown.stackuser.model.User
@@ -11,6 +12,10 @@ class UserDetailViewModel(
 ) : ViewModel() {
 
     val reputationList = repository.getUserReputation(user.id)
+
+    val showProgressBar = Transformations.map(reputationList) {
+        it.size == 0
+    }
 
     class Factory(
         private val repository: UserRepository,
