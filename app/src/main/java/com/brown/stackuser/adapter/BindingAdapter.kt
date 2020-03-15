@@ -1,6 +1,7 @@
 package com.brown.stackuser.adapter
 
 import android.net.Uri
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -58,5 +59,17 @@ fun TextView.setReputationChange(change: Int?) {
                 }
             )
         )
+    }
+}
+
+
+@BindingAdapter("is_visible")
+fun View.setVisibility(show: Boolean?) {
+    show?.let {
+        visibility = if (it) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }

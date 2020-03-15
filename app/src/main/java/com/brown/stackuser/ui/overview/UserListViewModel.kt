@@ -12,16 +12,15 @@ class UserListViewModel(
 
     private val allUsers = repository.allUsers
     private val favoriteUsers = repository.favoriteUsers
-
     val users = MediatorLiveData<PagedList<User>>()
-
-    //  live data event variable to navigation to DetailFragment
-    private val _navigationToDetailEvent = MutableLiveData<User>()
-    val navigationToDetailEvent: LiveData<User> = _navigationToDetailEvent
 
     private var currentFilter = UserFilter.ALL
 
     init {
+        setUpMediatorLiveData()
+    }
+
+    private fun setUpMediatorLiveData() {
         users.addSource(allUsers) {
             if (currentFilter == UserFilter.ALL) {
                 it?.let {
@@ -40,16 +39,25 @@ class UserListViewModel(
     }
 
 
+    // state variables to control UI
+    val showProgressBar = Transformations.map(allUsers) {
+        it.size == 0
+    }
+
+
+    //  event navigation to DetailFragment
+    private val _navigationToDetailEvent = MutableLiveData<User>()
+    val navigationToDetailEvent: LiveData<User> = _navigationToDetailEvent
+
     fun navigationToDetail(user: User) {
         _navigationToDetailEvent.value = user
     }
-
 
     fun navigationToDetailDone() {
         _navigationToDetailEvent.value = null
     }
 
-
+    // handle user favorite checkbox click
     fun updateFavoriteUser(user: User) {
         repository.updateFavoriteUser(user.id, !user.favorite)
     }
