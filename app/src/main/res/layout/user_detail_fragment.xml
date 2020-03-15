@@ -18,7 +18,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             app:cardElevation="3dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,11 +40,11 @@
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/name_text_detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@{viewModel.user.name}"
                     android:textAlignment="textStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -52,6 +52,44 @@
                     app:layout_constraintStart_toEndOf="@+id/avatar_image_detail"
                     app:layout_constraintTop_toTopOf="@+id/avatar_image_detail"
                     tools:text="Ngọc Lanh" />
+
+                <TextView
+                    android:id="@+id/location_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.user.location}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/name_text_detail"
+                    app:layout_constraintTop_toBottomOf="@+id/name_text_detail"
+                    tools:text="Q5, TP HCM" />
+
+                <TextView
+                    android:id="@+id/reputation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_corner"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/name_text_detail"
+                    app:layout_constraintTop_toBottomOf="@+id/location_text"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:reputation="@{viewModel.user.reputation}"
+                    tools:text="1,000,000" />
+
+                <TextView
+                    android:id="@+id/reputation_postfix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="reputation"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/reputation"
+                    app:layout_constraintStart_toEndOf="@+id/reputation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
