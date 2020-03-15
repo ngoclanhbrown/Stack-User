@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.brown.stackuser.Injection
 import com.brown.stackuser.adapter.ReputationAdapter
 import com.brown.stackuser.databinding.UserDetailFragmentBinding
+import com.google.android.material.snackbar.Snackbar
 
 class UserDetailFragment : Fragment() {
 
@@ -35,6 +36,8 @@ class UserDetailFragment : Fragment() {
 
         setUpRecyclerView()
 
+        setUpErrorObserver()
+
         return binding.root
     }
 
@@ -47,6 +50,17 @@ class UserDetailFragment : Fragment() {
         })
 
         binding.reputationList.adapter = adapter
+    }
+
+
+    private fun setUpErrorObserver() {
+        viewModel.networkError.observe(viewLifecycleOwner, Observer { error ->
+            Snackbar.make(
+                binding.root,
+                error,
+                Snackbar.LENGTH_LONG
+            ).show()
+        })
     }
 
 }

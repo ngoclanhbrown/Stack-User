@@ -12,6 +12,7 @@ import com.brown.stackuser.adapter.UserAdapter
 import com.brown.stackuser.adapter.UserViewHolder
 import com.brown.stackuser.databinding.UserListFragmentBinding
 import com.brown.stackuser.model.UserFilter
+import com.google.android.material.snackbar.Snackbar
 
 class UserListFragment : Fragment() {
 
@@ -36,6 +37,8 @@ class UserListFragment : Fragment() {
         setUpEventObserver()
 
         setUpRecyclerView()
+
+        setUpErrorObserver()
 
         setHasOptionsMenu(true)
 
@@ -69,6 +72,17 @@ class UserListFragment : Fragment() {
                 findNavController().navigate(action)
                 viewModel.navigationToDetailDone()
             }
+        })
+    }
+
+
+    private fun setUpErrorObserver() {
+        viewModel.networkError.observe(viewLifecycleOwner, Observer { error ->
+            Snackbar.make(
+                binding.root,
+                error,
+                Snackbar.LENGTH_LONG
+            ).show()
         })
     }
 

@@ -11,7 +11,14 @@ class UserDetailViewModel(
     val user: User
 ) : ViewModel() {
 
-    val reputationList = repository.getUserReputation(user.id)
+    private val reputationListResult = repository.getUserReputation(user.id)
+
+    val reputationList = reputationListResult.first
+    val networkError = reputationListResult.second
+
+    val showProgressBar = Transformations.map(reputationList) {
+        it.size == 0
+    }
 
     val showProgressBar = Transformations.map(reputationList) {
         it.size == 0

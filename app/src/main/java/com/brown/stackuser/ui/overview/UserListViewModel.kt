@@ -10,8 +10,13 @@ class UserListViewModel(
     private val repository: UserRepository
 ) : ViewModel() {
 
-    private val allUsers = repository.allUsers
+    private val allUserResult = repository.getAllUser()
+
+    private val allUsers = allUserResult.first
     private val favoriteUsers = repository.favoriteUsers
+
+    val networkError = allUserResult.second
+
     val users = MediatorLiveData<PagedList<User>>()
 
     private var currentFilter = UserFilter.ALL
