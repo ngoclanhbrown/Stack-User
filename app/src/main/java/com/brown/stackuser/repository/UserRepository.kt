@@ -6,6 +6,7 @@ import androidx.paging.toLiveData
 import com.brown.stackuser.api.StackOverflowService
 import com.brown.stackuser.database.LocalCache
 import com.brown.stackuser.model.Reputation
+import com.brown.stackuser.model.User
 import java.util.concurrent.Executor
 
 class UserRepository(
@@ -18,11 +19,17 @@ class UserRepository(
         const val DATABASE_PAGE_SIZE = 25
     }
 
-    val allUsers = cache.getUsers().toLiveData(
-        DATABASE_PAGE_SIZE,
-        boundaryCallback = UserBoundaryCallback(service, cache),
-        fetchExecutor = executor
-    )
+
+    fun getAllUser(): Pair<LiveData<PagedList<User>>, LiveData<String>> {
+        val callback = UserBoundaryCallback(service, cache)
+        val data = cache.getUsers().toLiveData(
+            DATABASE_PAGE_SIZE,
+            boundaryCallback = callback,
+            fetchExecutor = executor
+        )
+
+        return Pair(data, callback.networkError)
+    }
 
 
     val favoriteUsers = cache.getFavoriteUsers().toLiveData(
@@ -31,12 +38,15 @@ class UserRepository(
     )
 
 
-    fun getUserReputation(userId: Long): LiveData<PagedList<Reputation>> {
-        return cache.getUserReputation(userId).toLiveData(
+    fun getUserReputation(userId: Long): Pair<LiveData<PagedList<Reputation>>, LiveData<String>> {
+        val callback = ReputationBoundaryCallback(service, cache, userId)
+        val data = cache.getUserReputation(userId).toLiveData(
             DATABASE_PAGE_SIZE,
-            boundaryCallback = ReputationBoundaryCallback(service, cache, userId),
+            boundaryCallback = callback,
             fetchExecutor = executor
         )
+
+        return Pair(data, callback.networkError)
     }
 
 
