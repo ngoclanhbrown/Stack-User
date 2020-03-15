@@ -29,8 +29,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> onClickListener.onClick(user)}">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/avatar_image"
@@ -53,7 +52,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/location_text"
+                app:layout_constraintBottom_toTopOf="@+id/last_access"
                 app:layout_constraintEnd_toStartOf="@+id/favorite_checkbox"
                 app:layout_constraintStart_toEndOf="@+id/avatar_image"
                 app:layout_constraintTop_toBottomOf="@+id/reputation_text"
@@ -65,23 +64,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:text="@{String.valueOf(user.reputation)}"
                 app:layout_constraintBottom_toTopOf="@+id/name_text"
                 app:layout_constraintStart_toEndOf="@+id/avatar_image"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="123000" />
+                app:reputation="@{user.reputation}"
+                tools:text="123,000" />
 
             <TextView
-                android:id="@+id/location_text"
+                android:id="@+id/last_access"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{user.location}"
+                android:textStyle="italic"
+                app:date="@{user.lastAccessDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/avatar_image"
                 app:layout_constraintTop_toBottomOf="@+id/name_text"
-                tools:text="Reading, United Kingdom" />
+                tools:text="20/5/2020" />
 
             <CheckBox
                 android:id="@+id/favorite_checkbox"
@@ -89,9 +89,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:checked="@{user.favorite}"
+                android:button="@drawable/favorite_checkbox"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/handle_item_click"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="24dp"
+                android:onClick="@{() -> onClickListener.onClick(user)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/favorite_checkbox"
+                app:layout_constraintStart_toStartOf="@+id/avatar_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/handle_favorite_click"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:onClick="@{() -> checkBoxListener.onClick(user)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/name_text"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

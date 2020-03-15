@@ -28,8 +28,16 @@ fun ImageView.setImageUrl(url: String?) {
 @BindingAdapter("date")
 fun TextView.setDate(dateLong: Long?) {
     dateLong?.let {
-        val date = Date(it)
+        val date = Date(it * 1000L)
         val dateString = SimpleDateFormat.getDateInstance().format(date)
         text = dateString
+    }
+}
+
+
+@BindingAdapter("reputation")
+fun TextView.setReputation(reputation: Int?) {
+    reputation?.let {
+        text = String.format("%,d", it)
     }
 }
