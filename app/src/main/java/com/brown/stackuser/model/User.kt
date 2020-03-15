@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 /**
  * Immutable model class for a StackOverflow user that holds all the information about a user.
- * This class defines the Room User table, where the repo [id] is the primary key.
+ * This class defines the Room User table, where the user [id] is the primary key.
  * It is also be parcelized to be able to send via Bundle
  */
 @Entity

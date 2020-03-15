@@ -6,11 +6,11 @@ import androidx.room.ForeignKey
 /**
  * Immutable model class for a StackOverflow user that holds user's reputation information.
  * This class also defines the Room UserReputation table,
- * where the repo [userId] and [postId] is the primary keys.
+ * where the [userId], [postId] and [creationDate] is the primary keys.
  */
 @Entity(
     tableName = "UserReputation",
-    primaryKeys = ["userId", "postId"],
+    primaryKeys = ["userId", "postId", "creationDate"],
     foreignKeys = [
         ForeignKey(
             entity = User::class,
