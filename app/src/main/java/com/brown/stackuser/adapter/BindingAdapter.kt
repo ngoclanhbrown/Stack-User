@@ -3,6 +3,7 @@ package com.brown.stackuser.adapter
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.brown.stackuser.R
 import com.bumptech.glide.Glide
@@ -39,5 +40,23 @@ fun TextView.setDate(dateLong: Long?) {
 fun TextView.setReputation(reputation: Int?) {
     reputation?.let {
         text = String.format("%,d", it)
+    }
+}
+
+
+@BindingAdapter("reputation_change")
+fun TextView.setReputationChange(change: Int?) {
+    change?.let {
+        text = change.toString()
+        setTextColor(
+            ContextCompat.getColor(
+                context,
+                when {
+                    change < 0 -> R.color.reputationDown
+                    change > 0 -> R.color.reputationUp
+                    else -> R.color.reputationUnChange
+                }
+            )
+        )
     }
 }
