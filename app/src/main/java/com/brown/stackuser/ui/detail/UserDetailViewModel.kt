@@ -20,9 +20,6 @@ class UserDetailViewModel(
         it.size == 0
     }
 
-    val showProgressBar = Transformations.map(reputationList) {
-        it.size == 0
-    }
 
     class Factory(
         private val repository: UserRepository,
