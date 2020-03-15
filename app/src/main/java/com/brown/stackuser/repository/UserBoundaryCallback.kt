@@ -1,5 +1,7 @@
 package com.brown.stackuser.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.brown.stackuser.api.StackOverflowService
 import com.brown.stackuser.api.fetchUsers
@@ -20,6 +22,10 @@ class UserBoundaryCallback(
 
     // avoid triggering multiple requests in the same time
     private var isRequestInProgress = false
+
+    // handle network error
+    private val _networkError = MutableLiveData<String>()
+    val networkError: LiveData<String> = _networkError
 
 
     override fun onZeroItemsLoaded() {
@@ -44,6 +50,7 @@ class UserBoundaryCallback(
                 }
             },
             {
+                _networkError.postValue(it)
                 isRequestInProgress = false
             }
         )
