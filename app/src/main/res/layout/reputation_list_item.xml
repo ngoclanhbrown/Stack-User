@@ -12,7 +12,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="70dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -28,38 +28,38 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="@{reputation.reputationType}"
-                app:layout_constraintBottom_toTopOf="@+id/reputation_change_text"
+                app:layout_constraintBottom_toTopOf="@+id/creation_date_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/reputation_change_text"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="TextView" />
+                tools:text="post upvoted" />
 
             <TextView
                 android:id="@+id/reputation_change_text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{String.valueOf(reputation.change)}"
-                app:layout_constraintBottom_toTopOf="@+id/creation_date_text"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reputation_type_text"
-                tools:text="TextView" />
+                app:reputation_change="@{reputation.change}"
+                tools:text="+10" />
 
             <TextView
                 android:id="@+id/creation_date_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{String.valueOf(reputation.creationDate)}"
+                android:textStyle="italic"
+                app:date="@{reputation.creationDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reputation_change_text"
+                app:layout_constraintStart_toEndOf="@+id/reputation_change_text"
+                app:layout_constraintTop_toBottomOf="@+id/reputation_type_text"
                 tools:text="20/5/1999" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
