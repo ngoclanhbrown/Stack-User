@@ -3,6 +3,7 @@ package com.brown.stackuser.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -14,13 +15,20 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class User(
     @PrimaryKey
+    @Json(name = "user_id")
     val id: Long,
+    @Json(name = "display_name")
     val name: String,
+    @Json(name = "reputation")
     val reputation: Int,
-    val location: String,
+    @Json(name = "location")
+    val location: String = "",
+    @Json(name = "profile_image")
     val profileImageUrl: String,
+    @Json(name = "last_access_date")
     val lastAccessDate: Long,
-    val favorite: Boolean
+    // this field is exclusive for moshi
+    val favorite: Boolean = false
 ) : Parcelable
 
 

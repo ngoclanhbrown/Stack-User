@@ -50,7 +50,7 @@ fun fetchUsers(
             response: Response<UserListResponse>
         ) {
             if (response.isSuccessful) {
-                val users = response.body()?.asModelObjects() ?: emptyList()
+                val users = response.body()?.items ?: emptyList()
                 onSuccess(users)
             } else {
                 onError(response.errorBody()?.string() ?: "unknown error")
@@ -94,7 +94,7 @@ fun fetchReputation(
             response: Response<ReputationListResponse>
         ) {
             if (response.isSuccessful) {
-                val reputationList = response.body()?.asModelObjects() ?: emptyList()
+                val reputationList = response.body()?.items ?: emptyList()
                 onSuccess(reputationList)
             } else {
                 onError(response.errorBody()?.string() ?: "unknown error")
